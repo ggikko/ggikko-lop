@@ -1,5 +1,8 @@
 import math
+import time
 import pandas as pd
+
+startTime = time.time()
 
 
 def hasItem(df):
@@ -28,10 +31,15 @@ def getLeaveCount(df, company_name: str):
 # data list
 month_data_list = []
 
+loadStartTime = time.time()
+
 # load data
 for i in range(1, 9):
     path = "/Users/jihongpark/Documents/Week2/data/salary_0" + str(i) + "month.csv"
     month_data_list.append(pd.read_csv(path))
+
+loadEndTime = time.time()
+print("elapsed time for load data : " + str(int(loadEndTime - loadStartTime)) + "s")
 
 # change columns
 columns = ['자료생성년월', '사업장명', '사업자번호', '가입상태', '우편번호', '지번주소', '도로명주소', '법정주소코드',
@@ -92,7 +100,13 @@ if hasItem(find_company):
 else:
     print("not found")
 
+endTime = time.time()
+print("elapsedTIme : " + str(int(endTime - startTime)) + "s")
+
 """
+out
+
+elapsed time for load data : 15s
 회사이름 : 삼성전자(주)
 연봉순위 : 1,829위
 전체회사 수 : 515,827개
@@ -102,9 +116,17 @@ else:
 상위퍼센트 : 0.35%
 입사 : 5,056명
 퇴사 : 4,053명
+elapsedTIme : 18s
 """
 
-# out
+"""
+데이터 로드 : 15s
+분배 : 3s
+예상 시간 : 15 + 515827 * 3 =  1547496s = 429.86h 
+약 430시간..? 더 빠르게 할 수 있는 방법은 없을까?   
+"""
+
+"""
 # (o) 연봉상위 몇프로인가 -> 마지막달 기준 -> orderby -> index -> index / total 전체회사 * 100
 # (o) 예상평균연봉 - 마지막달 기준
 # (o) 주소 - 마지막달 기준
@@ -121,6 +143,9 @@ else:
 # 추가 해볼 것
 # (x) 관련기업 추천 -> 비슷한 연봉 + 비슷한 상위 or 하위 업종 + 가입자수 많은 것으로 랜덤으로 추천해줄까?
 # (x) 월 별 차이를 이용한 해당 달에 들어온 사람들 예측 -> 역으로 입사한사람들의 금액을 추적할 수 있지 않을까?
+# (X) 정리해서 새로운 데이터 프레임 만들기
+# (X) 분석시간을 더 단축하는 방법은 없을까? 
+"""
 
 # 하면서 느낀점
 # formatter 을 배워야.
@@ -131,4 +156,4 @@ else:
 # 더 많은 데이터를 분석해 봐야한다.
 # type 안쓰고 return 타입을 바로 알 수는 없나..?
 # extension이 없나..
-# null처리, 에러핸들링 등 기본적인게 힘든 상황 -> 훈련필요
+# null처리, 에러핸들링, function 모듈화, 네이밍 규칙, log 라이브러리 등 기본적인게 힘든 상황 -> 훈련필요
