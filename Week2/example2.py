@@ -28,6 +28,8 @@ def getLeaveCount(df, company_name: str):
         return 0
 
 
+target_company = "삼성"
+
 # data list
 month_data_list = []
 
@@ -35,35 +37,23 @@ loadStartTime = time.time()
 
 # load data
 for i in range(1, 9):
-    path = "/Users/jihongpark/Documents/Week2/data/salary_0" + str(i) + "month.csv"
+    path = "/Users/jihongpark/Documents/Week2/refined/salary_0" + str(i) + "month.csv"
     month_data_list.append(pd.read_csv(path))
 
 loadEndTime = time.time()
 print("elapsed time for load data : " + str(int(loadEndTime - loadStartTime)) + "s")
 
-# change columns
-columns = ['자료생성년월', '사업장명', '사업자번호', '가입상태', '우편번호', '지번주소', '도로명주소', '법정주소코드',
-           '행정주소코드', '광역시코드', '시군구코드', '읍면동코드', '사업장형태', '업종코드', '업종코드명',
-           '적용일', '재등록일', '탈퇴일', '가입자수', '고지금액', '신규', '상실', ]
-
-for temp_df in month_data_list:
-    temp_df.columns = columns
-
 latestDataFrame = month_data_list[len(month_data_list) - 1]
 latestDataFrameCopy = latestDataFrame.copy()
 
 # sort(평균연봉)
-latestDataFrameCopy['인당고지금액'] = latestDataFrameCopy['고지금액'] / latestDataFrameCopy['가입자수']
-latestDataFrameCopy['평균월급'] = latestDataFrameCopy['인당고지금액'] / 9 * 100
-latestDataFrameCopy['평균연봉'] = latestDataFrameCopy['평균월급'] * 12
 sorted_by_salary = latestDataFrameCopy.sort_values(by="평균연봉", ascending=False).reset_index(drop=True).copy()
 
 # condition
-target_company = "삼성전자"
 find_condition = sorted_by_salary['사업장명'].str.contains(target_company, regex=False)
 
 # find
-find_company = sorted_by_salary.loc[find_condition, ["사업장명", "가입자수", "도로명주소", "신규", "상실", "고지금액", "평균연봉"]].head(1)
+find_company = sorted_by_salary.loc[find_condition, :].head(1)
 
 test1 = time.time()
 
@@ -111,7 +101,7 @@ print("elapsedTIme : " + str(int(endTime - startTime)) + "s")
 """
 out
 
-elapsed time for load data : 14s~15s
+elapsed time for load data : 6s
 회사이름 : 삼성전자(주)
 연봉순위 : 1,829위
 전체회사 수 : 515,827개
@@ -121,14 +111,14 @@ elapsed time for load data : 14s~15s
 상위퍼센트 : 0.35%
 입사 : 5,056명
 퇴사 : 4,053명
-elapsedTIme : 18s
+elapsedTIme : 8s
 """
 
 """
-데이터 로드 : 15s
-분배 : 3s
-예상 시간 : 15 + 515827 * 3 =  1547496s = 429.86h 
-약 430시간..? 더 빠르게 할 수 있는 방법은 없을까?   
+데이터 로드 : 6s
+분배 : 2s
+예상 시간 : 6 + 515827 * 2 =  1031660s = 286.57h 
+약 286시간..? 더 빠르게 할 수 있는 방법은 없을까? 데이터 encoding을 해야하나    
 """
 
 """
@@ -162,3 +152,4 @@ elapsedTIme : 18s
 # type 안쓰고 return 타입을 바로 알 수는 없나..?
 # extension이 없나..
 # null처리, 에러핸들링, function 모듈화, 네이밍 규칙, log 라이브러리 등 기본적인게 힘든 상황 -> 훈련필요
+# csv는 pycharm에서 다 안보인다.
