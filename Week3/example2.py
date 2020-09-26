@@ -113,24 +113,10 @@ def addCompanyInfo(target_company):
                      }
 
         result_dict_list.append(temp_dict)
-        # print(temp_dict)
-
-        # print("회사이름 : " + find_company_name)
-        # print("연봉순위 : " + format(find_company_rank, ",") + "위")
-        # print("전체회사 수 : " + format(total_company_count, ",") + "개")
-        # print("가입자수 : " + format(find_company_join_count, ",") + "명")
-        # print("도로명주소 : " + find_company_address)
-        # print("예상연봉 : " + format(find_company_expected_salary, ",") + "원")
-        # print("상위퍼센트 : " + str(find_percent) + "%")
-        # print("입사 : " + format(join_total_count, ",") + "명")
-        # print("퇴사 : " + format(leave_total_count, ",") + "명")
     else:
         print("not found")
 
 
-addCompanyInfo("꼬꼬에프앤비")
-# addCompanyInfo("카카오뱅크")
-# addCompanyInfo("피플펀드")
 
 # for name in latest_df_copy["사업장명"].values:
 #     print("name : " + name)
