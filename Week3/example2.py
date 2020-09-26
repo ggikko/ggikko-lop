@@ -117,14 +117,6 @@ def addCompanyInfo(target_company):
         print("not found")
 
 
-
-# for name in latest_df_copy["사업장명"].values:
-#     print("name : " + name)
-#     addCompanyInfo(name)
-#     if name == "아린크":
-#         print("break")
-#         break
-
 json_val = json.dumps(result_dict_list, ensure_ascii=False)
 print(json_val)
 
