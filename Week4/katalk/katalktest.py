@@ -90,7 +90,7 @@ def show_word_cloud(full_text, need_save=False, file_name="temp"):
 # font & load
 rc('font', family='AppleGothic')
 plt.rcParams['axes.unicode_minus'] = False
-df = pd.read_csv('data/katalk_klayton_full.csv')
+df = pd.read_csv('/Users/jihongpark/Documents/example/ggikko-lop/Week4/katalk/data/allround.csv')
 
 # message 정재
 df['Message'] = df['Message'].apply(preprocessing)
@@ -106,10 +106,10 @@ show_word_cloud(' '.join(df['Message']))
 show_word_cloud(get_okt_text(' '.join(df['Message'])))
 
 # 빈도 분석
-show_user_freq('Tony Stark', df)
+show_user_freq('김현진', df)
 
 # 연도 기준 메세지 분석
-df['Date'] = pd.to_datetime(df['Date'])
-df = df.set_index('Date')
-year = "2020"
-show_plot(df[year + '-01-01': year + '-12-31']['Message'])
+# df['Date'] = pd.to_datetime(df['Date'])
+# df = df.set_index('Date')
+# year = "2020"
+# show_plot(df[year + '-01-01': year + '-12-31']['Message'])
