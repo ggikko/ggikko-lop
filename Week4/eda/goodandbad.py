@@ -107,6 +107,8 @@ bad_corp_df['status'] = 0
 
 train_df = pd.concat([good_corp_df, bad_corp_df])
 
+train_df.to_csv("train.csv", index=False)
+
 # 추출하고 원하지 않은 이상한 값들은 손수 제거함
 
 # print(train.head())
